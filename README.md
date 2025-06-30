@@ -21,6 +21,8 @@ This project is a simple FastAPI application that exposes a REST endpoint `GET /
    docker run -p 8000:8000 fastapi-sample
    ```
 
+   **Note:** Ensure the Dockerfile installs all dependencies listed in requirements.txt, including uvicorn, and sets the correct CMD to run the FastAPI application.
+
 3. Access the API:
    - Visit `http://localhost:8000/items` to see the sample items.
    - Open `http://localhost:8000/docs` for the automatically generated API documentation.
