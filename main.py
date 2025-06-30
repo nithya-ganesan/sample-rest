@@ -1,11 +1,38 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
+from typing import List, Dict
 
 app = FastAPI()
 
+# In-memory storage for items
+items: List[Dict] = [
+    {"id": 1, "name": "Item 1"},
+    {"id": 2, "name": "Item 2"},
+    {"id": 3, "name": "Item 3"}
+]
+
 @app.get("/items")
 def get_items():
-    return [
-        {"id": 1, "name": "Item 1"},
-        {"id": 2, "name": "Item 2"},
-        {"id": 3, "name": "Item 3"}
-    ]
+    return items
+
+@app.post("/items")
+def create_item(item: Dict):
+    item_id = max([i["id"] for i in items], default=0) + 1
+    item["id"] = item_id
+    items.append(item)
+    return item
+
+@app.put("/items/{id}")
+def update_item(id: int, updated_item: Dict):
+    for item in items:
+        if item["id"] == id:
+            item.update(updated_item)
+            return item
+    raise HTTPException(status_code=404, detail="Item not found")
+
+@app.delete("/items/{id}")
+def delete_item(id: int):
+    for item in items:
+        if item["id"] == id:
+            items.remove(item)
+            return {"message": f"Item {id} deleted"}
+    raise HTTPException(status_code=404, detail="Item not found")
