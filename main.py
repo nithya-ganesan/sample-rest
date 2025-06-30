@@ -1,7 +1,20 @@
 from fastapi import FastAPI, HTTPException
 from typing import List, Dict
 
-app = FastAPI()
+app = FastAPI(
+    title="FastAPI Sample REST API",
+    description="A simple FastAPI application exposing REST endpoints for managing items. AI agents can interact with this API to retrieve, create, update, and delete items.",
+    version="1.0.0",
+    contact={
+        "name": "API Support",
+        "url": "https://example.com/contact",
+        "email": "support@example.com"
+    },
+    license_info={
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+    }
+)
 
 # In-memory storage for items
 items: List[Dict] = [
