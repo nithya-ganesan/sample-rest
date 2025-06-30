@@ -10,6 +10,14 @@ items: List[Dict] = [
     {"id": 3, "name": "Item 3"}
 ]
 
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to the FastAPI application!"}
+
+@app.get("/favicon.ico")
+def get_favicon():
+    return {"message": "No favicon available"}
+
 @app.get("/items")
 def get_items():
     return items
